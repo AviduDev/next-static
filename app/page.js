@@ -8,8 +8,12 @@ const Home = () => {
       <p>
         Visit the <Link href="/about">About</Link> page.
       </p>
+
+      <p>
+        Visit the <Link href="/projects">Projects</Link> page.
+      </p>
     </div>
-  )
+  );
 }
 
 export default Home

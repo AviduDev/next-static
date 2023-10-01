@@ -1,0 +1,14 @@
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    border-bottom: solid black 1px;
+}
+
+.small {
+    font-size: var(--p-lg);
+    font-weight: normal;
+    text-transform: capitalize;
+}

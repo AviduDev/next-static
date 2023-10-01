@@ -1,0 +1,13 @@
+.heroContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 95vh;
+    position: relative;
+}
+
+.background {
+    position: absolute;
+    object-fit: cover;
+    z-index: -1;
+}
