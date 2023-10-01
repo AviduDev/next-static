@@ -1,30 +1,39 @@
-import ProjectCard from "../../components/ProjectCard"
-import client from "../../lib/graphql-client"
-import { allProducts } from "../../lib/graphql-queries";
 import Link from "next/link";
+import { client } from "../../lib/contentful/client";
+
+// export const getStaticProps = async () => {
+//   const response = await client.getEntries({ content_type: "project" });
+
+//   return {
+//     props: {
+//       projects: response.items,
+//       revalidate: 60,
+//     },
+//   };
+// };
 
 
-
-const getProducts = async () => {
-
-  const { products } = await client.request(allProducts);
-  return products;
-};
-
-export function generateMetadata() {
-  return { title: "Products" };
-}
 
 export default async function Projects() {
-  const products = await getProducts();
+
+  const entries = await client.getEntries({
+    content_type: 'project',
+  })
+
+  const projects = entries.items
+
+
 
   return (
     <main>
       <h1>Projects</h1>
-
       <ul>
-        {products.map(({ slug, name, id }) => (
-          <ProjectCard title={name} key={id} slug={slug} />
+        {projects.map((project) => (
+          <li key={project.fields.slug}>
+            <Link href={`/projects/${project.fields.slug}`}>
+              {project.fields.title}
+            </Link>
+          </li>
         ))}
       </ul>
     </main>

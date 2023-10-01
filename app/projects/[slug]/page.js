@@ -1,29 +1,27 @@
-import { GraphQLClient } from "graphql-request"
-import Link from "next/link"
-import { client } from "@/lib/graphql-client";
-import { productQuery } from "@/lib/graphql-queries";
+import { client } from "../../../lib/contentful/client";
+import RichText from "../../../lib/contentful/RichText"
 
-
-
-const getProduct = async (params) => {
-  const { product } = await client.request(
-  productQuery,
-    {
-      slug: params.slug,
-    }
-  );
-
-  return product;
-};
+export async function generateStaticParams() {
+  const entries = await client.getEntries({
+    content_type: "project",
+  });
+  const projects = entries.items;
+  return projects.map((project) => ({ slug: project.fields.slug }));
+}
 
 export default async function Project({ params }) {
-  const product = await getProduct(params);
 
-    return (
-      <main>
-        <h1>{product.name}</h1>
-        <p>{product.description}</p>
-        <p>{product.price / 100}</p>
-      </main>
-    );
+  const entries = await client.getEntries({
+    content_type: 'project',
+    'fields.slug': params.slug,
+  })
+
+  const project = entries.items[0]
+
+  return (
+    <main>
+      <h1>project</h1>
+      <h2>{project.fields.title}</h2>
+    </main>
+  );
 }
